@@ -1,8 +1,6 @@
 if(process.env.NODE_ENV !="production" ){
   require('dotenv').config();
 }
-console.log(process.env.ATLAS_KEY)
-
 
 const express=require("express");
 const app=express();
@@ -15,7 +13,7 @@ const ejsMate=require("ejs-mate");
 const wrapAsync=require("./utils/wrapAsync.js")
 const ExpressError=require("./utils/ExpressError.js")
 const {listingSchema,reviewSchema}=require("./schema.js")
-const Review = require('../MajorProject/models/review.js');
+const Review = require('./models/review.js');
 const listingRouter=require("./routes/listing.js");
 const session=require("express-session");
 const reviewRouter=require("./routes/review.js");
