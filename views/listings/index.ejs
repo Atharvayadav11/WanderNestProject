@@ -1,0 +1,32 @@
+<%layout("/layouts/boilerplate")%>
+
+<body>
+  <h3>All listings</h3>
+  <!-- <form action="/Listings/new"method="GET">
+    <button>Create New Listing</button>
+  </form> -->
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xsm-1">
+    <% for (let listing of allListings) { %>
+      <a href="/listings/<%=listing._id%>" class="listing-link">
+      <div class="card col listing-card" >
+    
+        <img src="<%=listing.image%>" class="card-img-top" alt="listing_image" style="height: 20rem"/>
+        <div class="card-img-overlay" style="height: 20rem;">
+          <h5 class="card-title" style="font-weight: 700;"><%=listing.title%></h5>
+          <p class="card-text" style="font-weight: 600;"><%=listing.description%></p>
+          <p class="card-text"><small></small></p>
+        </div>
+        <div class="card-body">
+          <b></b><h6 class="card-text" style="font-size: large;"><%=listing.title%></h6></b>
+          <h7 class="card-text"><i class="fa-solid fa-indian-rupee-sign"></i><%=listing.price%></h7>
+        </div>
+      </div>
+    </a>
+      <% } %>
+  </div>
+  
+ 
+
+  
+</body>
+

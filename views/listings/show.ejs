@@ -1,0 +1,119 @@
+<%layout("/layouts/boilerplate")%>
+<body>
+  <br>
+  
+  <h3 style="font-size: x-large;"><%=listing.title%></h3>
+  <div class="row">
+   <div class="col-4 offset-4">
+
+  <br>
+  <div id="carouselExampleIndicators" class="carousel slide">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="<%=listing.image%>" class="d-block w-100 show-img" alt="<%=listing.title%>">
+      </div>
+      <div class="carousel-item">
+        <img src="<%=listing.image%>" class="d-block w-100 show-img" alt="<%=listing.title%>">
+      </div>
+      <div class="carousel-item">
+        <img src="<%=listing.image%>" class="d-block w-100 show-img" alt="<%=listing.title%>">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+</div>
+<div class="show-text">
+  <ul>
+   
+    <br>
+    <br>
+    <p>Listed By : <i><%=listing.owner.username%></i></p>
+    <br>
+    <li style="font-size:medium;"><%=listing.description %></li>
+    <br>
+    <li style="font-size:large"><i class="fa-solid fa-indian-rupee-sign"></i><%=listing.price.toLocaleString("en-IN")%></li>
+    <br>
+    <li style="font-size: large"><%=listing.location%></li>
+    <br>
+    <li style="font-size:large"><%=listing.country%></li>
+    <br>
+    
+  </ul>
+</div>
+  <br>
+  <br>
+  <%if(currUser && currUser._id.equals(listing.owner._id)){%>
+  <div class="show-buttons">
+  <a href="/Listings/<%=listing._id%>/edit"><button class="btn btn-dark" style="background-color: #fe424d;color: black;border: none;">Edit Details</button></a>
+  <br>
+  <br>
+  <form  method="POST" action="/Listings/<%=listing._id%>?_method=Delete"><button class="btn btn-dark" style="background-color: #fe424d;color: black;border: none;">Delete this listing</button></form>
+</div>
+<%}%>
+<br>
+ 
+<br>
+
+<hr>
+
+<div class="col-8 offset=3">
+  <h3>Leave a review</h3>
+  <br>
+  <form action="/Listings/<%=listing.id%>/reviews" method="POST" novalidate class="needs-validation" >
+    <div>
+    <label for="rating" class="form-label">Rating</label>
+    <input type="range" class="form-range" min="1" max="5" id="rating" name="review[rating]">
+  </div>
+  <br>
+  <div>
+    <label for="comment" class="form-label">Comments</label>
+    <textarea class="form-control " name="review[comment]" id="comment" cols="30" rows="10" required></textarea >
+      <div class="valid-feedback">Thanks for the review</div>
+      <div class="invalid-feedback">Enter a comment for reviews </div>
+  </div>
+  <br>
+  <%if(currUser){%>
+  <button class="btn btn-dark" style="background-color: #fe424d;color: black;border: none;">Submit</button>
+  <%}%>
+  <%if(!currUser){%>
+   <div class="show-text" style="margin-left: 65vh;"> <p><h5><i>Please login first to drop a review</i></h5></p></div>
+  <%}%>
+  
+    </form>
+
+</div>
+<br>
+<hr>
+<h4><b>All reviews</b></h4>
+
+<div class="row"></div>
+<% for(review of listing.reviews){%>
+  
+  <div class="card col-5 ms-3 mb-3 " style="padding: 5px;" >
+    <div class="card-body">
+      <h5 clas="card-title"><%=review.author.username%></h5>
+      <p class="card-text"><%=review.comment%></p>
+      <p class="card-text"><%=review.rating%> stars</p>
+    </div> 
+  <br>
+  <form action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+    <button class="btn btn-dark mb-3 " style="background-color: #fe424d;color: black;border: none;margin-left: 200px;">Delete</button>
+  </form>
+</div>
+<%}%> 
+</div>
+
+</body>
